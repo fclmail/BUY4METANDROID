@@ -72,7 +72,7 @@
       console.log("MetaMask is installed");  
       
       const web3 = new Web3(window.ethereum);  
-      const usdcAddress = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'; // Updated USDC contract address  
+      const usdcAddress = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'; // USDC contract address  
       const decimals = 6;  
 
       // Set up the button to trigger the payment  
@@ -125,8 +125,17 @@
           document.getElementById("status").innerHTML = `Transaction successful! <br> Tx Hash: ${txHash.transactionHash}`;  
         } catch (error) {  
           document.getElementById("loading").style.display = 'none'; // Hide loading on error  
-          console.error(error);  
-          document.getElementById("status").innerHTML = `Transaction failed: ${error.message}`;  
+
+          // Check for insufficient funds  
+          if (error.code === 4001) {  
+            document.getElementById("status").innerHTML = "Transaction rejected by user.";  
+          } else if (error.message.includes("insufficient funds")) {  
+            document.getElementById("status").innerHTML = "Transaction failed: Insufficient funds in your wallet.";  
+          } else {  
+            // General error message  
+            console.error(error);  
+            document.getElementById("status").innerHTML = `Transaction failed: ${error.message}`;  
+          }  
         }  
       };  
     } else {  

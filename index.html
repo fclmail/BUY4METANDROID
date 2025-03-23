@@ -72,7 +72,7 @@
       console.log("MetaMask is installed");  
       
       const web3 = new Web3(window.ethereum);  
-      const usdcAddress = '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359'; // USDC contract address  
+      const usdcAddress = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'; // Updated USDC contract address  
       const decimals = 6;  
 
       // Set up the button to trigger the payment  
@@ -83,7 +83,7 @@
           // Request accounts from MetaMask  
           const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });  
           
-          // Check network (Polygon)  
+          // Check network (Polygon Mainnet)  
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });  
           if (chainId !== '0x89') { // Polygon Mainnet chain ID  
             document.getElementById("status").innerHTML = "Please switch to the Polygon Network in MetaMask.";  
@@ -91,7 +91,7 @@
           }  
 
           const senderAddress = accounts[0];  
-          const recipientAddress = '0x7114a16E0a396b0B40ee139e8c14FDd3335348eA'; // Updated deposit address  
+          const recipientAddress = '0x7114a16E0a396b0B40ee139e8c14FDd3335348eA'; // Deposit address  
           const amountInTokens = web3.utils.toBN(paymentAmount * Math.pow(10, decimals));  
 
           const usdcABI = [  
